@@ -1,15 +1,15 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <Transcribe></Transcribe>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import Transcribe from "@/components/TranscribeComponent.vue";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Transcribe
   }
 }
 </script>
