@@ -1,0 +1,14 @@
+// src/styles/_variables.scss
+
+// Importer les variables Bootstrap
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+
+// Définir ta palette de couleurs
+$primary: #1E90FF;
+$secondary: #FF6347;
+$background: #F5F5F5;
+$text-color: #333333;
+
+// Importer les composants Bootstrap après avoir défini les variables
+@import 'bootstrap/scss/bootstrap';
