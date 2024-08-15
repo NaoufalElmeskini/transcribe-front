@@ -5,16 +5,16 @@
         <h2 class="card-title text-center" :style="{ color: 'var(--primary)' }">Transcription</h2>
         <div class="mb-3">
           <input
-              v-model="text"
+              v-model="videoUrl"
               type="text"
               class="form-control"
-              placeholder="Entrez le texte à transcrire"
+              placeholder="URL"
               :style="{ backgroundColor: 'var(--background)', color: 'var(--text-color)' }"
           />
         </div>
         <div class="d-grid">
           <button
-              @click="transcribe"
+              @click="transcribe(videoUrl)"
               class="btn"
               :style="{ backgroundColor: 'var(--primary)', borderColor: 'var(--primary)' }"
               :disabled="loading"
@@ -54,7 +54,7 @@ function createBlopLink(data) {
 export default {
   data() {
     return {
-      text: "",
+      videoUrl: "",
       loading: false,
       success: false,
       error: false,
@@ -63,12 +63,18 @@ export default {
   mounted() {
   },
   methods: {
-    async transcribe() {
+    async transcribe(url) {
+      this.loading = true;
+      this.success = false;
+      this.error = false;
+
+      console.log(url)
+
       try {
         // Appel à l'API POST /transcribe
         const response = await axios.post('http://localhost:5000/transcribe', {
           "videoType": "Y",
-          "link": "https://www.youtube.com/shorts/o4EHb3TkMsw",
+          link: this.videoUrl,
           "language": "EN"
         }, {
           responseType: 'blob' // On attend un fichier en réponse
