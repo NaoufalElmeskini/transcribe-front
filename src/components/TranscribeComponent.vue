@@ -1,33 +1,37 @@
 <template>
   <div class="container mt-5">
-    <div class="card shadow-sm">
+    <div class="card shadow-sm" :style="{ backgroundColor: 'var(--background)' }">
       <div class="card-body">
-        <h2 class="card-title text-center">Transcription</h2>
+        <h2 class="card-title text-center" :style="{ color: 'var(--primary)' }">Transcription</h2>
         <div class="mb-3">
           <input
               v-model="text"
               type="text"
               class="form-control"
-              placeholder="URL à transcrire"/>
+              placeholder="Entrez le texte à transcrire"
+              :style="{ backgroundColor: 'var(--background)', color: 'var(--text-color)' }"
+          />
         </div>
         <div class="d-grid">
           <button
               @click="transcribe"
-              class="btn btn-primary"
-              :disabled="loading">
+              class="btn"
+              :style="{ backgroundColor: 'var(--primary)', borderColor: 'var(--primary)' }"
+              :disabled="loading"
+          >
             Transcribe
           </button>
         </div>
-        <div v-if="loading" class="mt-3 text-center text-primary">
-          <div class="spinner-border" role="status">
+        <div v-if="loading" class="mt-3 text-center">
+          <div class="spinner-border text-primary" role="status">
             <span class="visually-hidden">Loading...</span>
           </div>
           <p>Transcription en cours...</p>
         </div>
-        <div v-if="success" class="mt-3 alert alert-success">
+        <div v-if="success" class="mt-3 alert alert-success" :style="{ backgroundColor: 'var(--success)', color: 'var(--background)' }">
           Transcription réussie !
         </div>
-        <div v-if="error" class="mt-3 alert alert-danger">
+        <div v-if="error" class="mt-3 alert alert-danger" :style="{ backgroundColor: 'var(--error)', color: 'var(--background)' }">
           Erreur lors de la transcription.
         </div>
       </div>
@@ -89,8 +93,8 @@ export default {
 </script>
 
 <style scoped>
-.card {
-  max-width: 500px;
-  margin: auto;
-}
+  .card {
+    max-width: 500px;
+    margin: auto;
+  }
 </style>

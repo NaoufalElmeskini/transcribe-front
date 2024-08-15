@@ -5,10 +5,15 @@
 @import 'bootstrap/scss/variables';
 
 // Définir ta palette de couleurs
-$primary: #1E90FF;
-$secondary: #FF6347;
-$background: #F5F5F5;
-$text-color: #333333;
-
+:root {
+  --primary: #F79F79; // Corail doux
+  --secondary: #F7D08A; // Jaune clair
+  --background: #FFFFFF; // Blanc
+  --text-color: #333333; // Gris foncé
+  --accent: #F28D8D; // Rouge vif
+  --success: #4CAF50; // Vert succès
+  --error: #F44336; // Rouge erreur
+  --border: #E0E0E0; // Gris clair
+}
 // Importer les composants Bootstrap après avoir défini les variables
 @import 'bootstrap/scss/bootstrap';
