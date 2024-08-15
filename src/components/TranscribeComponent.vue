@@ -1,8 +1,37 @@
 <template>
-  <div>
-    <h2>Transcription</h2>
-    <input v-model="text" type="text" placeholder="Entrez le texte à transcrire" />
-    <button @click="transcribe">Transcribe</button>
+  <div class="container mt-5">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="card-title text-center">Transcription</h2>
+        <div class="mb-3">
+          <input
+              v-model="text"
+              type="text"
+              class="form-control"
+              placeholder="URL à transcrire"/>
+        </div>
+        <div class="d-grid">
+          <button
+              @click="transcribe"
+              class="btn btn-primary"
+              :disabled="loading">
+            Transcribe
+          </button>
+        </div>
+        <div v-if="loading" class="mt-3 text-center text-primary">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p>Transcription en cours...</p>
+        </div>
+        <div v-if="success" class="mt-3 alert alert-success">
+          Transcription réussie !
+        </div>
+        <div v-if="error" class="mt-3 alert alert-danger">
+          Erreur lors de la transcription.
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -21,7 +50,10 @@ function createBlopLink(data) {
 export default {
   data() {
     return {
-
+      text: "",
+      loading: false,
+      success: false,
+      error: false,
     };
   },
   mounted() {
@@ -44,8 +76,12 @@ export default {
         // Nettoyage après le téléchargement
         document.body.removeChild(link);
         window.URL.revokeObjectURL(link.href);
+        this.success = true;
       } catch (error) {
+        this.error = true;
         console.error('Erreur lors de la transcription :', error);
+      } finally {
+        this.loading = false;
       }
     },
   }
@@ -53,7 +89,8 @@ export default {
 </script>
 
 <style scoped>
-h2 {
-  color: #42b983;
+.card {
+  max-width: 500px;
+  margin: auto;
 }
 </style>
