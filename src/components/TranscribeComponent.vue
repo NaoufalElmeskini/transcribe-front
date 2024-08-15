@@ -15,8 +15,6 @@ function createBlopLink(data) {
   const link = document.createElement('a');
   link.href = url;
   link.setAttribute('download', 'transcription.txt'); // Nom du fichier à télécharger
-  document.body.appendChild(link);
-  link.click();
   return link;
 }
 
@@ -41,7 +39,8 @@ export default {
         });
 
         const link = createBlopLink(response.data);
-
+        document.body.appendChild(link);
+        link.click();
         // Nettoyage après le téléchargement
         document.body.removeChild(link);
         window.URL.revokeObjectURL(link.href);
