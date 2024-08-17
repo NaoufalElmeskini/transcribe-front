@@ -12,15 +12,22 @@
               :style="{ backgroundColor: 'var(--background)', color: 'var(--text-color)' }"
           />
         </div>
-        <div class="d-grid">
-          <button
-              @click="transcribe(videoUrl)"
-              class="btn"
-              :style="{ backgroundColor: 'var(--primary)', borderColor: 'var(--primary)' }"
-              :disabled="loading"
-          >
-            Transcribe
-          </button>
+        <div class="actionContainer">
+          <div class="lgSelector">
+            <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedLanguage">
+              <option v-for="lg in this.languages" :key="lg">{{ lg }}</option>
+            </select>
+          </div>
+
+          <div class="translateBtn">
+            <button
+                @click="transcribe(videoUrl)"
+                class="btn"
+                :style="{ backgroundColor: 'var(--primary)', borderColor: 'var(--primary)' }"
+                :disabled="loading">
+              Transcribe
+            </button>
+          </div>
         </div>
         <div v-if="loading" class="mt-3 text-center">
           <div class="spinner-border text-primary" role="status">
@@ -47,7 +54,7 @@ function createBlopLink(data) {
   const url = window.URL.createObjectURL(new Blob([data]));
   const link = document.createElement('a');
   link.href = url;
-  link.setAttribute('download', 'transcription.txt'); // Nom du fichier à télécharger
+  link.setAttribute('download', 'transcription.srt'); // Nom du fichier à télécharger
   return link;
 }
 
@@ -58,6 +65,9 @@ export default {
       loading: false,
       success: false,
       error: false,
+      languages : ['EN', 'FR'],
+      selectedLanguage : 'EN',
+      TRANSCRIBE_API_URL : "http://localhost:5000/transcribe",
     };
   },
   mounted() {
@@ -68,14 +78,15 @@ export default {
       this.success = false;
       this.error = false;
 
+      console.log(this.selected)
       console.log(url)
 
       try {
         // Appel à l'API POST /transcribe
-        const response = await axios.post('http://localhost:5000/transcribe', {
+        const response = await axios.post(this.TRANSCRIBE_API_URL , {
           "videoType": "Y",
           link: this.videoUrl,
-          "language": "EN"
+          "language": this.selectedLanguage
         }, {
           responseType: 'blob' // On attend un fichier en réponse
         });
@@ -102,5 +113,19 @@ export default {
   .card {
     max-width: 500px;
     margin: auto;
+  }
+
+  .actionContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .lgSelector {
+    padding: 15px;
+  }
+
+  .translateBtn {
+    padding: 15px;
   }
 </style>
